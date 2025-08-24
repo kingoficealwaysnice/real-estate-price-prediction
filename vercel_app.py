@@ -9,40 +9,18 @@ app = Flask(__name__,
             template_folder=template_dir,
             static_folder=static_dir)
 
-# Simple demo prediction
-class DemoModelManager:
-    def __init__(self):
-        self.models_loaded = False
-        
-    def predict(self, features):
-        # Simple price calculation for demo
-        area = float(features[0]) if len(features) > 0 else 1000
-        bedrooms = float(features[1]) if len(features) > 1 else 3
-        bathrooms = float(features[2]) if len(features) > 2 else 2
-        
-        base_price = area * 150  # $150 per sq ft base
-        bedroom_bonus = bedrooms * 10000
-        bathroom_bonus = bathrooms * 5000
-        
-        price = base_price + bedroom_bonus + bathroom_bonus
-        return max(price, 50000)  # Minimum $50k
-
-class DemoDataProcessor:
-    def preprocess_input(self, data):
-        # Process input data
-        area = float(data.get('area', 1000))
-        bedrooms = float(data.get('bedrooms', 3))
-        bathrooms = float(data.get('bathrooms', 2))
-        location = data.get('location', 'suburban')
-        
-        # Simple location factor
-        location_factor = 1.2 if location.lower() in ['downtown', 'city_center'] else 1.0
-        
-        return [area * location_factor, bedrooms, bathrooms]
-
-# Initialize demo managers
-model_manager = DemoModelManager()
-data_processor = DemoDataProcessor()
+# Ultra-simple demo prediction
+def predict_price(area, bedrooms, bathrooms, location):
+    """Simple price calculation without any ML libraries"""
+    base_price = area * 150  # $150 per sq ft base
+    bedroom_bonus = bedrooms * 10000
+    bathroom_bonus = bathrooms * 5000
+    
+    # Location factor
+    location_factor = 1.2 if location.lower() in ['downtown', 'city_center'] else 1.0
+    
+    price = (base_price + bedroom_bonus + bathroom_bonus) * location_factor
+    return max(price, 50000)  # Minimum $50k
 
 @app.route('/')
 def index():
@@ -70,11 +48,13 @@ def predict():
             if field not in data:
                 return jsonify({'error': f'Missing required field: {field}'}), 400
         
-        # Preprocess the input data
-        processed_data = data_processor.preprocess_input(data)
+        # Get values and calculate prediction
+        area = float(data.get('area', 1000))
+        bedrooms = float(data.get('bedrooms', 3))
+        bathrooms = float(data.get('bathrooms', 2))
+        location = data.get('location', 'suburban')
         
-        # Get prediction from model
-        prediction = model_manager.predict(processed_data)
+        prediction = predict_price(area, bedrooms, bathrooms, location)
         
         return jsonify({
             'predicted_price': float(prediction),

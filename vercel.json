@@ -6,7 +6,7 @@
       "use": "@vercel/python",
       "config": {
         "runtime": "python3.9",
-        "excludeFiles": "{models/**,data/**,notebooks/**,*.pkl,*.joblib,*.h5,*.hdf5,*.csv,*.xlsx,*.parquet,*.zip,*.tar.gz,*.log,*.tmp,*.cache,node_modules/**,.git/**,.pytest_cache/**,__pycache__/**,*.pyc,*.pyo,*.pyd}"
+        "excludeFiles": "{**/*.pyc,**/*.pyo,**/*.pyd,**/__pycache__,**/.git,**/.gitignore,**/.pytest_cache,**/.coverage,**/.env,**/.venv,**/venv,**/env,**/node_modules,**/*.log,**/*.tmp,**/*.cache,**/*.pkl,**/*.joblib,**/*.h5,**/*.hdf5,**/*.csv,**/*.xlsx,**/*.parquet,**/*.zip,**/*.tar.gz,**/*.tgz,**/*.rar,**/*.7z,**/models/**,**/data/**,**/notebooks/**,**/tests/**,**/src/**,**/train_models.py,**/run_app.py,**/PROJECT_DOCUMENTATION.md,**/README.md,**/web/flutter_app/**,**/web/static/css/**,**/web/static/js/**,**/web/templates/index.html}""
       }
     }
   ],
