@@ -5,15 +5,15 @@
       "src": "vercel_app.py",
       "use": "@vercel/python",
       "config": {
-        "maxLambdaSize": "50mb",
-        "runtime": "python3.9"
+        "runtime": "python3.9",
+        "excludeFiles": "{models/**,data/**,notebooks/**,*.pkl,*.joblib,*.h5,*.hdf5,*.csv,*.xlsx,*.parquet,*.zip,*.tar.gz,*.log,*.tmp,*.cache,node_modules/**,.git/**,.pytest_cache/**,__pycache__/**,*.pyc,*.pyo,*.pyd}"
       }
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "vercel_app.py"
+      "dest": "/vercel_app.py"
     }
   ]
 }
